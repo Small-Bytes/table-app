@@ -32,26 +32,19 @@ export default function StartGame() {
 
     var game = { name: '', seb: 0, robert: 0, kvist: 0 };
     
-    //var setPoints = action?.setPoints;
     var setPoints = fetcher?.data?.setPoints;
-
-    console.log(action);
-    console.log(fetcher);
-    console.log("SetP " + setPoints);
-
-    //console.log("loads addplayer " + addPlayer);
 
     return (
     <div>
         <fetcher.Form method="post" className="space-y-6" key='test'>
 
-        <h1>{loader.header}</h1>
+        <h1>Start new game</h1>
         <div>
         <label
             htmlFor="newGame"
             className="mb-1 block text-sm font-medium"
           >
-            Start new game
+            Name of the game
           </label>
           <input
             type="text"

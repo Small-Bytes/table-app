@@ -23,7 +23,10 @@ export default function Index() {
   const handleExport = () => {
     const csvContent =
       "data:text/csv;charset=utf-8," +
-      ["Name,Score", ...players.map((p) => `${p.name},${p.score}`)].join("\n");
+      // First row: headers
+      "Position,Name,Score\n" +
+      // Each player's data in a new row, with values separated by commas
+      players.map((p, index) => `${index + 1},${p.name},${p.score}`).join("\n");
 
     const encodedUri = encodeURI(csvContent);
     const link = document.createElement("a");
@@ -62,18 +65,7 @@ export default function Index() {
         >
           Add results
         </Link>
-        <div className="absolute top-6 right-6">
-          <label className="flex items-center space-x-3">
-            <span className="text-gray-800 dark:text-gray-100">Dark Mode</span>
-            <input
-              type="radio"
-              checked={darkMode}
-              onChange={() => setDarkMode(!darkMode)}
-              className="form-radio h-5 w-5 text-orange-600 rounded-full focus:ring-orange-500 focus:outline-none"
-            />
-          </label>
-        </div>
-      </header>
+       </header>
 
       <div className="mt-12 w-full px-4">
         <div className="flex justify-center mb-6">

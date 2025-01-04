@@ -12,15 +12,38 @@ export const meta: MetaFunction = () => {
 
 export default function Index() {
   const [gameComplete, setGameComplete] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [darkMode, setDarkMode] = useState(false);
 
   const handleCompleteGame = () => {
     setGameComplete(true);
     setTimeout(() => setGameComplete(false), 5000); // Meddelande visas i 5 sekunder
   };
 
+  const handleExport = () => {
+    const csvContent =
+      "data:text/csv;charset=utf-8," +
+      ["Name,Score", ...players.map((p) => `${p.name},${p.score}`)].join("\n");
+
+    const encodedUri = encodeURI(csvContent);
+    const link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "leaderboard.csv");
+    document.body.appendChild(link);
+    link.click();
+  };
+
+  const filteredPlayers = players
+    .map((player, index) => ({ ...player, originalPosition: index + 1 }))
+    .filter((player) =>
+      player.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+  const maxScore = Math.max(...players.map((p) => p.score));
+
   return (
-    <div className="flex h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900">
-      <header className="flex flex-col items-center gap-6">
+    <div className={`${darkMode ? "dark" : ""} flex h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900`}>
+      <header className="flex flex-col items-center gap-6 relative w-full px-6">
         <img
           src="https://via.placeholder.com/150x150?text=Game+Logo"
           alt="Game Logo"
@@ -39,9 +62,30 @@ export default function Index() {
         >
           Add results
         </Link>
+        <div className="absolute top-6 right-6">
+          <label className="flex items-center space-x-3">
+            <span className="text-gray-800 dark:text-gray-100">Dark Mode</span>
+            <input
+              type="radio"
+              checked={darkMode}
+              onChange={() => setDarkMode(!darkMode)}
+              className="form-radio h-5 w-5 text-orange-600 rounded-full focus:ring-orange-500 focus:outline-none"
+            />
+          </label>
+        </div>
       </header>
 
       <div className="mt-12 w-full px-4">
+        <div className="flex justify-center mb-6">
+          <input
+            type="text"
+            placeholder="Search player..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
+          />
+        </div>
+
         <h2 className="text-center text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
           Leaderboard
         </h2>
@@ -54,15 +98,19 @@ export default function Index() {
             </tr>
           </thead>
           <tbody>
-            {players && players.length > 0 ? (
-              players.map((player, index) => (
+            {filteredPlayers && filteredPlayers.length > 0 ? (
+              filteredPlayers.map((player) => (
                 <tr
                   key={player.id}
                   className={`${
-                    index % 2 === 0 ? "bg-white dark:bg-gray-800" : "bg-gray-100 dark:bg-gray-700"
+                    player.score === maxScore
+                      ? "bg-green-100 dark:bg-green-700 font-bold"
+                      : player.originalPosition % 2 === 0
+                      ? "bg-white dark:bg-gray-800"
+                      : "bg-gray-100 dark:bg-gray-700"
                   } hover:bg-orange-100 dark:hover:bg-orange-600`}
                 >
-                  <td className="border border-gray-300 px-4 py-2">{index + 1}</td>
+                  <td className="border border-gray-300 px-4 py-2">{player.originalPosition}</td>
                   <td className="border border-gray-300 px-4 py-2">{player.name}</td>
                   <td className="border border-gray-300 px-4 py-2">{player.score}</td>
                 </tr>
@@ -79,6 +127,15 @@ export default function Index() {
             )}
           </tbody>
         </table>
+
+        <div className="text-center mt-6">
+          <button
+            onClick={handleExport}
+            className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+          >
+            Export Leaderboard
+          </button>
+        </div>
       </div>
 
       <footer className="mt-12 text-center text-gray-600 dark:text-gray-400">

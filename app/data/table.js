@@ -1,8 +1,8 @@
 // Initialize an array of objects to store the data
 export let players = [
-    { id: "1", name: "Seb", score: 100 },
-    { id: "2", name: "Robert", score: 30 },
-    { id: "3", name: "Kvist", score: 0 },
+    { id: 1, name: "Seb", score: 100 },
+    { id: 2, name: "Robert", score: 30 },
+    { id: 3, name: "Kvist", score: 0 },
   ];
 
 /**
@@ -25,8 +25,9 @@ export function AddPoints(playerid, score) {
 
     if (existingEntry) {
         // Update the score if the entry exists
-        existingEntry.score = score;
-        console.log(`Updated ${playerid}'s score to ${score}.`);
+        var sc = existingEntry.score + score; 
+        existingEntry.score = sc;
+        console.log(`Updated ${playerid}'s score to ${sc}.`);
     } else {
         // Add a new entry if it doesn't exist
         players.push({ playerid, score });

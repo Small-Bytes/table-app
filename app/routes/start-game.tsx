@@ -29,7 +29,7 @@ export const clientAction = async ({ request }) => {
 if (index !== -1) {
   // Step 2: Retrieve value from onepoint using the found index
   const value = contestors[index];
-  AddPoints(index, 10);
+  AddPoints(index + 1, 10);
 } else {
   console.log('point 1 not found in the array');
 }

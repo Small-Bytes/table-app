@@ -47,7 +47,7 @@ export default function StartGame() {
     return (
       <div className="max-w-2xl mx-auto p-4 rounded-md shadow-md">
         <fetcher.Form method="post" className="space-y-6" key='test'>
-        <h1>Start new game</h1>
+        <h1>Add results</h1>
         <div>
           <input
             type="text"

@@ -79,22 +79,6 @@ export default function Index() {
             )}
           </tbody>
         </table>
-
-        <div className="text-center mt-6">
-          <button
-            onClick={handleCompleteGame}
-            className="px-6 py-3 rounded-md font-medium transition duration-300 ease-in-out bg-green-600 text-white hover:bg-green-700"
-          >
-            Complete Game
-          </button>
-        </div>
-
-        {/* Visar meddelande vid spelets slut */}
-        {gameComplete && (
-          <div className="mt-6 text-center text-lg font-semibold text-green-700">
-            Game Completed! 🎉
-          </div>
-        )}
       </div>
 
       <footer className="mt-12 text-center text-gray-600 dark:text-gray-400">

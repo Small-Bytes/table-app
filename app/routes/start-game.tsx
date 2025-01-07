@@ -106,7 +106,7 @@ export default function StartGame() {
         type="submit"
         name="intent"
         value="complete"
-        className="inline-flex justify-center rounded-md border mt-2 border-transparent bg-green-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        className="inline-flex justify-center rounded-md border mt-2 border-transparent bg-cyan-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
         >Complete</button>
         {actionData?.errors?.winner ? (
           <p className="mt-2 italic text-red-500">{actionData?.errors.winner}</p>

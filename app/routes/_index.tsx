@@ -53,7 +53,7 @@ export default function Index() {
           Table for Friends by Friends
         </h1>
         <p className="text-lg text-gray-700 dark:text-gray-300">
-          Samla poäng och tävla mot dina vänner!
+          Gather points and compete with your friends!
         </p>
         <Link
           to="/start-game"
@@ -92,7 +92,7 @@ export default function Index() {
         <table className="table-auto border-collapse border border-gray-300 w-full max-w-3xl mx-auto text-center shadow-md rounded-lg overflow-hidden">
           <thead className="bg-orange-500 text-white">
             <tr>
-              <th className="border border-gray-300 px-4 py-2">Position</th>
+              <th className="border border-gray-300 px-4 py-2">#</th>
               <th className="border border-gray-300 px-4 py-2">Name</th>
               <th className="border border-gray-300 px-4 py-2">Score</th>
             </tr>
@@ -104,11 +104,11 @@ export default function Index() {
                   key={player.id}
                   className={`${
                     player.score === maxScore
-                      ? "bg-green-100 dark:bg-green-700 font-bold"
+                      ? "bg-cyan-100 dark:bg-cyan-700 font-bold"
                       : player.originalPosition % 2 === 0
                       ? "bg-white dark:bg-gray-800"
                       : "bg-gray-100 dark:bg-gray-700"
-                  } hover:bg-orange-100 dark:hover:bg-orange-600`}
+                  }`}
                 >
                   <td className="border border-gray-300 px-4 py-2">{player.originalPosition}</td>
                   <td className="border border-gray-300 px-4 py-2">{player.name}</td>
@@ -131,7 +131,7 @@ export default function Index() {
         <div className="text-center mt-6">
           <button
             onClick={handleExport}
-            className="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700"
+            className="px-6 py-3 bg-cyan-600 text-white rounded-md hover:bg-cyan-700"
           >
             Export Leaderboard
           </button>
@@ -139,7 +139,8 @@ export default function Index() {
       </div>
 
       <footer className="mt-12 text-center text-gray-600 dark:text-gray-400">
-        <p>© 2025 Table for Friends - Made with ❤️</p>
+          <p>© 2025 Table for Friends - Made by</p>
+          <a href="https://smallbytes.se/" target="_blank">Small Bytes</a>
       </footer>
     </div>
   );

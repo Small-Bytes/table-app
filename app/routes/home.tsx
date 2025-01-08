@@ -23,9 +23,7 @@ export default function Index() {
   const handleExport = () => {
     const csvContent =
       "data:text/csv;charset=utf-8," +
-      // First row: headers
       "Position,Name,Score\n" +
-      // Each player's data in a new row, with values separated by commas
       players.map((p, index) => `${index + 1},${p.name},${p.score}`).join("\n");
 
     const encodedUri = encodeURI(csvContent);
@@ -47,10 +45,11 @@ export default function Index() {
   return (
     <div className={`${darkMode ? "dark" : ""} flex h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900`}>
       <header className="flex flex-col items-center gap-6 relative w-full px-6">
+        {/* Uppdaterad bild */}
         <img
-          src="https://via.placeholder.com/150x150?text=Game+Logo"
-          alt="Game Logo"
-          className="w-32 h-32 rounded-full"
+          src="https://via.placeholder.com/300x200?text=Board+Game+Fun"
+          alt="Playful board game and sports theme"
+          className="w-64 h-40 rounded-md shadow-lg"
         />
         <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100">
           Table for Friends by Friends
@@ -65,7 +64,7 @@ export default function Index() {
         >
           Add results
         </Link>
-       </header>
+      </header>
 
       <div className="mt-12 w-full px-4">
         <div className="flex justify-center mb-6">
@@ -131,8 +130,8 @@ export default function Index() {
       </div>
 
       <footer className="mt-12 text-center text-gray-600 dark:text-gray-400">
-          <p>© 2025 Table for Friends - Made by</p>
-          <a href="https://smallbytes.se/" target="_blank">Small Bytes</a>
+        <p>© 2025 Table for Friends - Made by</p>
+        <a href="https://smallbytes.se/" target="_blank">Small Bytes</a>
       </footer>
     </div>
   );

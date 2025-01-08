@@ -11,26 +11,26 @@ export const clientAction = async ({ request }) : Route.ActionArgs => {
   const intent = formData.get("intent");
   const newGame = formData.get("newGame");
 
-  console.log("Intent " + intent);
-  console.log("NewGame " + newGame);
   if (intent == 'start-game')
   {
-    console.log("returns add player");
-    return { setPoints: true }
+    return { gameNameIsSet: true }
   }
 
-  console.log("returns null");
-  const point = formData.getAll("point");
+  const winner = formData.get("winner");
   const contestors = formData.getAll("contestor");
-  console.log("point " + point);
-  console.log("contestors " + contestors);
 
-  const index = point.findIndex(item => item === '1');
+  const errors = {};
 
-if (index !== -1) {
-  // Step 2: Retrieve value from onepoint using the found index
-  const value = contestors[index];
-  AddPoints(index + 1, 10);
+  if (winner == null) {
+    errors.winner = "Invalid winner. No winner set";
+  }
+
+  if (Object.keys(errors).length > 0) {
+    return Response.json({ errors });
+  }
+
+if (winner !== -1) {
+  AddPoints(Number(winner), 10);
 } else {
   console.log('point 1 not found in the array');
 }
@@ -44,70 +44,75 @@ export default function StartGame({
 }: Route.ComponentProps) {
     const fetcher = useFetcher();
 
-    const setPoints = fetcher?.data?.setPoints;
+    const gameNameIsSet = fetcher?.data?.gameNameIsSet;
 
     return (
-    <div>
+      <div className="max-w-2xl mx-auto p-4 rounded-md shadow-md">
         <fetcher.Form method="post" className="space-y-6" key='test'>
-        <h1>Start new game</h1>
+        <h1>Add results</h1>
         <div>
-        <label
-            htmlFor="newGame"
-            className="mb-1 block text-sm font-medium"
-          >
-            Name of the game
-          </label>
           <input
             type="text"
             name="newGame"
             id="newGame"
+            placeholder="Name of the game"
             className="w-full rounded-md border border-gray-300 px-2 py-2 placeholder-gray-400 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-1 focus:ring-teal-600"
           />
           <button
             type="submit"
             name="intent"
             value="start-game"
-            className="inline-flex justify-center mt-2 rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-red-600 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
-            onClick={(e) => {
-              if (
-                !confirm("Är du säker på namnet?")
-              ) {
-                e.preventDefault();
-              }
-            }}
+            className="inline-flex justify-center mt-2 rounded-md border border-transparent bg-orange-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-orange-500 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
           >Start</button>
           </div>
           </fetcher.Form>
           <Form method="post">
             <div className="mt-2">
-      {setPoints && loaderData.length > 0 && (loaderData.map((ld) => (
-        <div key={ld.id}>
-          <p>{ld.name}</p>
+      {/* Headers */}
+      {gameNameIsSet && players.length > 0 && (
+      <div className="grid grid-cols-3 gap-4 font-bold text-lg mb-2">
+        <div>Player</div>
+        <div className="text-center">Winner</div>
+        <div className="text-center">Contestor</div>
+      </div>
+      )}
+      {gameNameIsSet && loaderData.length > 0 && (loaderData.map((player) => (
+        <div key={player.id} className="grid grid-cols-3 gap-4 items-center mb-2 p-2 border-b border-gray-200">
+        {/* Player Name */}
+        <p className="font-medium">{player.name}</p>
 
+        {/* Winner Radio */}
+        <div className="flex justify-center">
           <input
-          type="number"
-          name={`point`}
-          id={`${ld.id}point`}
-          placeholder="0"
-          min="0" max={loaderData.length}
-          className="rounded-md border border-gray-300 px-4 py-2 placeholder-gray-400 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-1 focus:ring-teal-600"
+            type="radio"
+            name="winner"
+            id={`${player.id}-win`}
+            value={player.id}
+            className="rounded-md border-gray-300 shadow-sm focus:border-teal-600 focus:ring-1 focus:ring-teal-600"
           />
+        </div>
 
-          <input 
-          type="checkbox" 
-          className="ml-4"
-          name="contestor"
-          value={ld.id}
-          defaultChecked
+        {/* Contestor Checkbox */}
+        <div className="flex justify-center">
+          <input
+            type="checkbox"
+            name="contestor"
+            value={player.id}
+            defaultChecked
+            className="rounded-md border-gray-300 focus:ring-teal-600"
           />
+        </div>
           </div>
       )))}
       <button
         type="submit"
         name="intent"
         value="complete"
-        className="inline-flex justify-center rounded-md border mt-2 border-transparent bg-green-500 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-green-600 focus:outline-none focus:ring-2 focus:ring-green-500 focus:ring-offset-2"
+        className="inline-flex justify-center rounded-md border mt-2 border-transparent bg-cyan-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-cyan-500 focus:outline-none focus:ring-2 focus:ring-cyan-500 focus:ring-offset-2"
         >Complete</button>
+        {actionData?.errors?.winner ? (
+          <p className="mt-2 italic text-red-500">{actionData?.errors.winner}</p>
+        ) : null}
       </div>
         </Form>
 

@@ -1,15 +1,16 @@
-import { useLoaderData } from "@remix-run/react"
+import type { Route } from "./+types/table";
 
-export function clientLoader() {
+export function clientLoader() : Route.ClientLoaderArgs {
   return { header: 'Resultat' }
 }
 
-export default function TableData() {
-    const loader = useLoaderData();
+export default function TableData({
+  loaderData,
+}: Route.ComponentProps) {
 
     return (
     <div>
-        <h1>{loader.header}</h1>
+        <h1>{loaderData.header}</h1>
         <p>Sist: Kvist har aldrig vunnit något</p>
     </div>)
 }

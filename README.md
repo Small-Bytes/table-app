@@ -1,18 +1,8 @@
-# templates/spa
+# Development
 
-This template leverages [Remix SPA Mode](https://remix.run/docs/en/main/guides/spa-mode) to build your app as a Single-Page Application using [Client Data](https://remix.run/docs/en/main/guides/client-data) for all of your data loads and mutations.
+Start the development server with HMR:
 
-## Setup
-
-```shellscript
-npx create-remix@latest --template remix-run/remix/templates/spa
-```
-
-## Development
-
-You can develop your SPA app just like you would a normal Remix app, via:
-
-```shellscript
+```bash
 npm run dev
 ```
 

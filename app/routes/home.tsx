@@ -1,9 +1,9 @@
-import type { MetaFunction } from "@remix-run/node";
-import { Link } from "@remix-run/react";
+import type { Route } from "./+types/home";
+import { Link } from "react-router";
 import { useState } from "react";
 import { players } from "../data/table";
 
-export const meta: MetaFunction = () => {
+export function meta({}: Route.MetaArgs) {
   return [
     { title: "Table for Friends - Play and Compete!" },
     { name: "description", content: "Challenge your friends and climb the leaderboard!" },

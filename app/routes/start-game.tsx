@@ -1,11 +1,12 @@
-import { Form, redirect, useActionData, useFetcher, useLoaderData } from "@remix-run/react"
+import { Form, redirect, useFetcher } from "react-router"
 import { AddPoints, players } from "../data/table";
+import type { Route } from "./+types/start-game";
 
-export function clientLoader () {
+export function clientLoader () : Route.ClientLoaderArgs {
   return Response.json(players);
-};
+}
 
-export const clientAction = async ({ request }) => {
+export const clientAction = async ({ request }) : Route.ActionArgs => {
   const formData = await request.formData();
   const intent = formData.get("intent");
   const newGame = formData.get("newGame");
@@ -37,12 +38,13 @@ if (index !== -1) {
 return redirect('/');
 }
 
-export default function StartGame() {
-    const loader = useLoaderData();
-    const action = useActionData();
+export default function StartGame({
+  actionData,
+  loaderData
+}: Route.ComponentProps) {
     const fetcher = useFetcher();
 
-    var setPoints = fetcher?.data?.setPoints;
+    const setPoints = fetcher?.data?.setPoints;
 
     return (
     <div>
@@ -78,7 +80,7 @@ export default function StartGame() {
           </fetcher.Form>
           <Form method="post">
             <div className="mt-2">
-      {setPoints && loader.length > 0 && (loader.map((ld) => (
+      {setPoints && loaderData.length > 0 && (loaderData.map((ld) => (
         <div key={ld.id}>
           <p>{ld.name}</p>
 
@@ -87,7 +89,7 @@ export default function StartGame() {
           name={`point`}
           id={`${ld.id}point`}
           placeholder="0"
-          min="0" max={loader.length}
+          min="0" max={loaderData.length}
           className="rounded-md border border-gray-300 px-4 py-2 placeholder-gray-400 shadow-sm focus:border-teal-600 focus:outline-none focus:ring-1 focus:ring-teal-600"
           />
 

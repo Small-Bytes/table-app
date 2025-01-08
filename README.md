@@ -28,13 +28,7 @@ npm run preview
 
 ### Deployment
 
-You can then serve your app from any HTTP server of your choosing. The server should be configured to serve multiple paths from a single root `/index.html` file (commonly called "SPA fallback"). Other steps may be required if the server doesn't directly support this functionality.
-
-For a simple example, you could use [sirv-cli](https://www.npmjs.com/package/sirv-cli):
-
-```shellscript
-npx sirv-cli build/client/ --single
-```
+Using [flyctl](https://fly.io/docs/getting-started/launch/):
 
 ## Styling
 

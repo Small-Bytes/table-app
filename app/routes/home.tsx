@@ -1,9 +1,9 @@
-import type { Route } from "./+types/home";
 import { Link } from "react-router";
+import type { MetaFunction } from "react-router";
 import { useState } from "react";
 import { players } from "../data/table";
 
-export function meta({}: Route.MetaArgs) {
+export const meta: MetaFunction = () => {
   return [
     { title: "Table for Friends - Play and Compete!" },
     { name: "description", content: "Challenge your friends and climb the leaderboard!" },

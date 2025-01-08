@@ -2,11 +2,11 @@ import { Form, redirect, useFetcher } from "react-router"
 import { AddPoints, players } from "../data/table";
 import type { Route } from "./+types/start-game";
 
-export function clientLoader () : Route.ClientLoaderArgs {
-  return Response.json(players);
+export function clientLoader () {
+  return players;
 }
 
-export const clientAction = async ({ request }) : Route.ActionArgs => {
+export const clientAction = async ({ request }) => {
   const formData = await request.formData();
   const intent = formData.get("intent");
   const newGame = formData.get("newGame");

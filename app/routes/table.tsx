@@ -1,6 +1,6 @@
 import type { Route } from "./+types/table";
 
-export function clientLoader() : Route.ClientLoaderArgs {
+export function clientLoader() {
   return { header: 'Resultat' }
 }
 

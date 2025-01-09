@@ -47,7 +47,7 @@ export default function Index() {
       <header className="flex flex-col items-center gap-6 relative w-full px-6">
         {/* Uppdaterad bild */}
         <img
-          src="app\images\ian-talmacs-hiqD508ZWV0-unsplash.jpg"
+          src="ian-talmacs-hiqD508ZWV0-unsplash.jpg"
           alt="Playful board game and sports theme"
           className="w-64 h-40 rounded-md shadow-lg"
         />

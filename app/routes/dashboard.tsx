@@ -47,7 +47,7 @@ export default function Index() {
       <header className="flex flex-col items-center gap-6 relative w-full px-6">
         <div className="absolute top-4 left-4">
           <Link
-            to="/home"
+            to="/"
             className="px-4 py-2 bg-blue-600 text-white rounded-md shadow hover:bg-blue-700"
           >
             Home

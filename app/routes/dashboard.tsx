@@ -137,8 +137,8 @@ export default function Index() {
       </div>
 
       <footer className="mt-12 text-center text-gray-600 dark:text-gray-400">
-        <p>© 2025 Table for Friends - Made by</p>
-        <a href="https://smallbytes.se/" target="_blank">Small Bytes</a>
+        <p>© 2025 Table for Friends</p>
+        <a href="https://smallbytes.se/" target="_blank">Made by - Small Bytes</a>
       </footer>
     </div>
   );

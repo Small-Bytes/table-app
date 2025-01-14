@@ -45,12 +45,12 @@ export default function Index() {
   return (
     <div>
       <header className="bg-blue-800 text-white text-center py-4">
-        <h1>Välkommen till Team Divider</h1>
+        <h1>Welcome to Table for Friends by Friends</h1>
       </header>
 
       <main className="flex justify-center items-center bg-gray-100 py-12">
         <div className="bg-white border border-gray-300 rounded-lg shadow-lg p-6 w-full max-w-md">
-          <h2 className="text-2xl font-semibold mb-4 text-gray-800 text-center">Logga in</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-gray-800 text-center">Log in</h2>
           <form>
             <input
               type="text"
@@ -68,15 +68,15 @@ export default function Index() {
               to="/dashboard"
               className="w-full inline-block bg-blue-800 text-white text-center py-2 px-4 rounded-md hover:bg-blue-600"
             >
-              Logga in
+              Log in
             </Link>
           </form>
         </div>
       </main>
 
       <footer className="mt-12 text-center text-gray-600 dark:text-gray-400">
-        <p>© 2025 Table for Friends - Made by</p>
-        <a href="https://smallbytes.se/" target="_blank">Small Bytes</a>
+        <p>© 2025 Table for Friends</p>
+        <a href="https://smallbytes.se/" target="_blank">Made by - Small Bytes</a>
       </footer>
     </div>
   );

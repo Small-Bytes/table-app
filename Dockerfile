@@ -15,17 +15,6 @@ COPY . .
 # Build the application
 RUN npm run build
 
-# Use nginx to serve static files
-FROM nginx:alpine
+ENV NODE_ENV=production
 
-# Copy nginx configuration
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-# Copy built static files from builder
-COPY --from=builder /app/build/client /usr/share/nginx/html
-
-# Expose port 3000
-EXPOSE 3000
-
-# Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["npm", “run” ,"start"] # will launch the remix app when we run this Docker image.

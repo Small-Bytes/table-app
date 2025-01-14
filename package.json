@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@neondatabase/serverless": "^0.10.4",
     "@react-router/node": "^7.1.1",
     "@react-router/serve": "^7.1.1",
     "cross-env": "^7.0.3",

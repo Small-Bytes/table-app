@@ -1,27 +1,48 @@
-FROM node:18-alpine AS builder
+# base node image
+FROM node:18-bullseye-slim as base
 
-# Set working directory
-WORKDIR /app
+# set for base and all layer that inherit from it
+ENV NODE_ENV production
 
-# Copy package files
-COPY package*.json ./
+# Install all node_modules, including dev dependencies
+FROM base as deps
 
-# Install dependencies
-RUN npm ci
+WORKDIR /myapp
 
-# Copy source files
-COPY . .
+ADD package.json package-lock.json ./
+RUN npm install --include=dev
 
-# Build the application
+# Setup production node_modules
+FROM base as production-deps
+
+WORKDIR /myapp
+
+COPY --from=deps /myapp/node_modules /myapp/node_modules
+ADD package.json package-lock.json ./
+RUN npm prune --omit=dev
+
+# Build the app
+FROM base as build
+
+WORKDIR /myapp
+
+COPY --from=deps /myapp/node_modules /myapp/node_modules
+
+ADD . .
 RUN npm run build
 
-# Copy dependencies and build artifacts from the builder stage
-COPY --from=builder /app/package*.json ./
-COPY --from=builder /app/build ./build
-COPY --from=builder /app/public ./public
-COPY --from=builder /app/node_modules ./node_modules
-#COPY --from=builder /app/remix.config.js ./remix.config.js - Seems to be name after v7 but we dont have it?
+# Finally, build the production image with minimal footprint
+FROM base
 
-ENV NODE_ENV=production
+ENV PORT="8080"
+ENV NODE_ENV="production"
 
-CMD ["npm", “run” ,"start"] # will launch the remix app when we run this Docker image.
+WORKDIR /myapp
+
+COPY --from=production-deps /myapp/node_modules /myapp/node_modules
+
+COPY --from=build /myapp/build /myapp/build
+COPY --from=build /myapp/public /myapp/public
+COPY --from=build /myapp/package.json /myapp/package.json
+
+CMD ["npm", "start"]

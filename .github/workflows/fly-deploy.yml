@@ -17,8 +17,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: superfly/flyctl-actions/setup-flyctl@master
       - name: Set Fly.io secrets
-        run: |
-          flyctl secrets set DATABASE_URL="${{ secrets.NEON_DB }}"
+        run: flyctl secrets set DATABASE_URL='${{ secrets.NEON_DB }}'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
       

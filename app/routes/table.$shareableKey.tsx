@@ -1,10 +1,8 @@
 import { useLoaderData } from 'react-router';
 import { sql } from '~/db.server';
 
-export const loader = async (req) => {
-  const params = req.params;
-  console.log(params);
-  if (!params.sharableKey) {
+export const loader = async ({ params }) => {
+  if (!params.shareableKey) {
     throw new Response("Not Found", { status: 404 });
   }
   const response = await sql`select * from tableResults`;

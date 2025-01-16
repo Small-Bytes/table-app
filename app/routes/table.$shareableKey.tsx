@@ -2,9 +2,8 @@ import { useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
 import { sql } from '~/db.server';
 
-export const loader = async ({ params, request }) => {
-  console.log(params);
-  if (!params.sharableKey) {
+export const loader = async ({ params }) => {
+  if (!params.shareableKey) {
     throw new Response("Not Found", { status: 404 });
   }
   const sqlResult = await sql`SELECT * FROM tableResults`;
@@ -24,7 +23,6 @@ export const loader = async ({ params, request }) => {
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
-  
   const data = useLoaderData();
   const players = data;
   

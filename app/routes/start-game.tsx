@@ -1,12 +1,12 @@
 import { Form, redirect, useFetcher } from "react-router"
-import { AddPoints, players } from "../data/table";
 import type { Route } from "./+types/start-game";
+import { AddPoints, getPlayersBySharableKey } from "~/data/table";
 
-export function clientLoader () {
-  return players;
-}
+export const loader = async ({ params }) => {
+  return getPlayersBySharableKey(params.shareableKey); // TODO fix player or id coming in to this page
+  }
 
-export const clientAction = async ({ request }) => {
+export const action = async ({ request }) => {
   const formData = await request.formData();
   const intent = formData.get("intent");
   const newGame = formData.get("newGame");
@@ -30,12 +30,12 @@ export const clientAction = async ({ request }) => {
   }
 
 if (winner !== -1) {
-  AddPoints(Number(winner), 10);
+  await AddPoints(Number(winner), 10);
 } else {
   console.log('point 1 not found in the array');
 }
 
-return redirect('/');
+return redirect('/table/origin');
 }
 
 export default function StartGame({
@@ -69,7 +69,7 @@ export default function StartGame({
           <Form method="post">
             <div className="mt-2">
       {/* Headers */}
-      {gameNameIsSet && players.length > 0 && (
+      {gameNameIsSet && loaderData.length > 0 && (
       <div className="grid grid-cols-3 gap-4 font-bold text-lg mb-2">
         <div>Player</div>
         <div className="text-center">Winner</div>

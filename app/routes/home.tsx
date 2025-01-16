@@ -1,7 +1,6 @@
 import { Link } from "react-router";
 import type { MetaFunction } from "react-router";
 import { useState } from "react";
-import { players } from "../data/table";
 
 export const meta: MetaFunction = () => {
   return [
@@ -33,14 +32,6 @@ export default function Index() {
     document.body.appendChild(link);
     link.click();
   };
-
-  const filteredPlayers = players
-    .map((player, index) => ({ ...player, originalPosition: index + 1 }))
-    .filter((player) =>
-      player.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
-  const maxScore = Math.max(...players.map((p) => p.score));
 
   return (
     <div>

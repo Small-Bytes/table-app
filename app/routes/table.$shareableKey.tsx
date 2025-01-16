@@ -1,24 +1,15 @@
 import { useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
-import { sql } from '~/db.server';
+import { getPlayersBySharableKey } from '~/data/table';
 
 export const loader = async ({ params }) => {
   if (!params.shareableKey) {
     throw new Response("Not Found", { status: 404 });
   }
-  const sqlResult = await sql`SELECT * FROM tableResults`;
-  //const [result] = await sql`SELECT * FROM tableResults WHERE shareableKey = '${params.sharableKey}'`;
 
-  var tablesWithKey = sqlResult.filter((res) => res.shareablekey == 'original');
+  var players = getPlayersBySharableKey(params.shareableKey);
 
-  console.log(tablesWithKey);
-
-  if (!tablesWithKey || tablesWithKey.length === 0)
-    return [];
-
-  var result = tablesWithKey[0];
-
-  return result.data.players;
+  return players;
 };
 
 export default function Page() {

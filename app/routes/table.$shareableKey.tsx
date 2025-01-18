@@ -1,21 +1,26 @@
 import { useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
-import { getPlayersBySharableKey } from '~/data/table';
+import { getPlayersById, getPlayersBySharableKey, getTableBySharableKey } from '~/data/table';
 
 export const loader = async ({ params }) => {
   if (!params.shareableKey) {
     throw new Response("Not Found", { status: 404 });
   }
 
-  var players = getPlayersBySharableKey(params.shareableKey);
+  var table = await getTableBySharableKey(params.shareableKey);
 
-  return players;
+  if (!table)
+    throw new Response("Not Found", { status: 404 });
+
+  return { key: table.id, players: table.data.players };
 };
 
 export default function Page() {
   const [searchQuery, setSearchQuery] = useState("");
-  const data = useLoaderData();
-  const players = data;
+  const {key, players} = useLoaderData();
+  console.log("key " + key);
+  console.log("players " + players);
+  // const { table } = useParams(); // Extract the 'table' param from the route
   
   const filteredPlayers = players
     .map((player, index) => ({ ...player, originalPosition: index + 1 }))
@@ -29,7 +34,7 @@ export default function Page() {
     <div className={`flex h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900`}>
       <header className="flex flex-col items-center gap-6 relative w-full px-6">
         <img
-          src="ian-talmacs-hiqD508ZWV0-unsplash.jpg"
+          src="./../ian-talmacs-hiqD508ZWV0-unsplash.jpg"
           alt="Playful board game and sports theme"
           className="w-64 h-40 rounded-md shadow-lg"
         />
@@ -37,11 +42,10 @@ export default function Page() {
           Table for Friends by Friends
         </h1>
         <p className="text-lg text-gray-700 dark:text-gray-300">
-          Gather points and compete with your friends!
+          Welcome to your table with friends! Below you can see the leaderboard or add new score from a competition
         </p>
         <Link
-          to="/start-game"
-          rel="norefer"
+        to={`/start-game?table=${key}`}
           className="px-6 py-3 rounded-md font-medium transition duration-300 ease-in-out focus:outline-none focus:ring-2 focus:ring-offset-2 shadow-md hover:shadow-lg transform hover:-translate-y-0.5 bg-orange-600 text-white hover:bg-orange-700 focus:ring-orange-500"
         >
           Add results
@@ -49,6 +53,9 @@ export default function Page() {
       </header>
 
       <div className="mt-12 w-full px-4">
+        <h2 className="text-center text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
+          Leaderboard
+        </h2>
         <div className="flex justify-center mb-6">
           <input
             type="text"
@@ -58,10 +65,6 @@ export default function Page() {
             className="px-4 py-2 border rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-orange-500"
           />
         </div>
-
-        <h2 className="text-center text-2xl font-semibold mb-4 text-gray-800 dark:text-gray-100">
-          Leaderboard
-        </h2>
         <table className="table-auto border-collapse border border-gray-300 w-full max-w-3xl mx-auto text-center shadow-md rounded-lg overflow-hidden">
           <thead className="bg-orange-500 text-white">
             <tr>

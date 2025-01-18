@@ -1,11 +1,11 @@
 import { Form, redirect, useFetcher } from "react-router"
 import type { Route } from "./+types/start-game";
-import { AddPoints, getPlayersById, getPlayersBySharableKey } from "~/data/table";
+import { AddPoints, getPlayersById } from "~/data/database.server";
 
 export const loader = async ({ request }) => {
   let { searchParams } = new URL(request.url);
   let tableId = searchParams.get("table");
-  return { tableId, players: await getPlayersById(tableId) }; // TODO fix player or id coming in to this page
+  return { tableId, players: await getPlayersById(tableId) }; 
   }
 
 export const action = async ({ request }) => {

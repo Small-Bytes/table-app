@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, useLoaderData } from 'react-router';
-import { getPlayersById, getPlayersBySharableKey, getTableBySharableKey } from '~/data/table';
+import { getTableBySharableKey } from '~/data/database.server';
 
 export const loader = async ({ params }) => {
   if (!params.shareableKey) {

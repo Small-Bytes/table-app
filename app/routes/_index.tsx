@@ -2,6 +2,7 @@ import { Link } from "react-router";
 import type { MetaFunction } from "react-router";
 import { useState } from "react";
 import Login from "~/components/login";
+import SetupGameWithoutLogin from "~/components/SetupGameWithoutLogin";
 
 export const meta: MetaFunction = () => {
   return [
@@ -56,6 +57,9 @@ export default function Index() {
           </div>
           <div className="mt-6">
             <Login />
+          </div>
+          <div className="mt-6">
+            <SetupGameWithoutLogin />
           </div>
         </div>
 

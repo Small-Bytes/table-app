@@ -1,4 +1,5 @@
 import { sql } from "~/db.server";
+import { generateKey } from "./generateSafeUrlKey";
 
 /**
  * Adds or updates a score for a given name in the tableData array.
@@ -52,17 +53,25 @@ export async function AddPoints (playerid, score, tableId) {
 }
 
 export async function addNewTable(players) {
-    const sqlResult = await sql`SELECT * FROM tableResults`;
-    var tablesWithKey = sqlResult.filter((res) => res.id == resultid);
+  console.log(players);
 
-    if (!tablesWithKey || tablesWithKey.length === 0) {
-        console.error('Invalid id: Could not find results');
-        return;
-    }
-      
-    var table = tablesWithKey[0];
+  if (!players || players.length === 0)
+  {
+    console.error('Invalid input: players must be array with values');
+    return;
+  }
 
-    return table.players;
+    var sharableKey = generateKey({ source: 'TableForFriends', date: new Date().getUTCDate()});
+    const insertQuery = `
+        INSERT INTO tableResults (shareablekey, data)
+        VALUES ($1, $2)
+        RETURNING *`;
+
+      console.log(players);
+      const insertResult = await sql(insertQuery, [sharableKey, JSON.stringify(players)]);
+      console.log('insert Entity:', insertResult[0]);
+
+    return sharableKey;
 }
 
 export async function getPlayersById(resultid) {

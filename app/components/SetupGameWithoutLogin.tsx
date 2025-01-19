@@ -1,4 +1,4 @@
-import { Link } from 'react-router';
+import { Link } from "react-router";
 
 export default function SetupGameWithoutLogin() {
   return (
@@ -13,11 +13,12 @@ export default function SetupGameWithoutLogin() {
         </small>
         <div className="mt-2">
           <Link
-            className="rounded-md bg-orange-800 text-center text-white hover:bg-orange-600"
+            className="flex items-center gap-2 py-2 text-gray-300 hover:text-gray-100"
             to="setup-table"
           >
+            <span>Continue without login</span>
             <svg
-              className="h-6 w-6 bg-orange-800 text-gray-800 dark:text-white"
+              className="h-4 w-4 text-orange-600"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -25,9 +26,9 @@ export default function SetupGameWithoutLogin() {
             >
               <path
                 stroke="currentColor"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M1 5h12m0 0L9 1m4 4L9 9"
               ></path>
             </svg>

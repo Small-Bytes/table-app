@@ -4,17 +4,17 @@ import { generateKey } from "./generateSafeUrlKey";
 /**
  * Adds or updates a score for a given name in the tableData array.
  * @param {number} playerid - The name associated with the score.
- * @param {number} score - The score to add or update.
+ * @param {number} game - The score to add or update.
  * @param {string} tableId - The table id to update.
 
  */
-export async function AddPoints (playerid, score, tableId) {
+export async function AddGameAndWinner (playerid, game, tableId) {
     if (typeof playerid !== 'number' || isNaN(playerid)) {
         console.error('Invalid input: PlayerId must be a valid number.');
         return;
     }
-    if (typeof score !== 'number' || isNaN(score)) {
-        console.error('Invalid input: Score must be a valid number.');
+    if (typeof game !== 'string' || !game) {
+        console.error('Invalid input: Game must be a string with value.');
         return;
     }
 
@@ -25,17 +25,29 @@ export async function AddPoints (playerid, score, tableId) {
 
     const table = await getTableById(tableId);
     var data = table.data;
+    var history = data.history;
     var players = data.players;
     // Check if the entry already exists
     const existingEntry = players.find(entry => entry.id === playerid);
 
     if (existingEntry) {
         // Update the score if the entry exists
-        var sc = existingEntry.score + score; 
+        var sc = existingEntry.score + 1; 
         existingEntry.score = sc;
         console.log(`Updated ${playerid}'s score to ${sc}.`);
     } else {
         console.log(`Failed to add score. Player with id ${playerid} is missing.`);
+    }
+
+    console.log("history " + history);
+    if (!history || history === null)
+    {
+        history = [game];
+        data.history = history;
+    }
+    else
+    {
+        history.push(game);
     }
 
     const updateQuery = `

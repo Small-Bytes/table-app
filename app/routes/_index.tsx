@@ -72,7 +72,6 @@ export default function Index() {
           </div>
         </div>
       </main>
-
       <footer className="w-full max-w-4xl py-6 text-center text-gray-600 dark:text-gray-400">
         <p>© 2025 Table for Friends</p>
         <a href="https://smallbytes.se/" rel="noreferrer" target="_blank">

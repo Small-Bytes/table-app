@@ -1,6 +1,6 @@
 import { Form, redirect } from 'react-router';
 import type { Route } from './+types/start-game';
-import { AddPoints, getPlayersById } from '~/data/database.server';
+import { AddGameAndWinner, getPlayersById } from '~/data/database.server';
 
 export const loader = async ({ request }) => {
   const { searchParams } = new URL(request.url);
@@ -33,10 +33,18 @@ export const action = async ({ request }) => {
 
   var tableKey = '';
   if (winner !== -1) {
-    tableKey = await AddPoints(Number(winner), 10, tableId);
+    tableKey = await AddGameAndWinner(Number(winner), gameName, tableId);
   } else {
-    console.log('point 1 not found in the array');
+    console.error('failed to find selected winner');
   }
+
+  // var gameType = await getGameTypeByName(gameName);
+
+  // if (!gameType)
+  // {
+  //   console.log("Save game type");
+  //   await addGameType(gameName);
+  // }
 
   return redirect('/table/' + tableKey);
 };
@@ -46,24 +54,16 @@ export default function StartGame({
   loaderData,
 }: Route.ComponentProps) {
   const { tableId, players } = loaderData;
-  console.log(loaderData);
 
   return (
     <div
       className={`flex h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900`}
     >
       <div className="mx-auto max-w-2xl rounded-md p-4 shadow-md">
+      <h1 className='text-2xl text-gray-800 dark:text-gray-100 mb-2'>Add results</h1>
         <Form
           method="post"
-          onChange={e => {
-            const { id, name, value } = e.target;
-            console.log('con ' + id + ' ' + name + ' ' + value);
-            // Perform validation here!
-
-            e.stopPropagation();
-          }}
         >
-          <h1>Add results</h1>
           <div>
             <input type="hidden" name="tableId" value={tableId} />
             <input

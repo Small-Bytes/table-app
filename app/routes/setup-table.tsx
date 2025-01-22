@@ -24,8 +24,7 @@ export const action = async ({ request }) => {
   }
 
   const sharableKey = await addNewTable({ players });
-  console.log('sharablekey is ' + sharableKey);
-  //return redirect('/table/' + sharableKey);
+  
   return redirect('/table/' + sharableKey);
 };
 

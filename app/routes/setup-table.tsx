@@ -24,7 +24,7 @@ export const action = async ({ request }) => {
   }
 
   const sharableKey = await addNewTable({ players });
-  
+
   return redirect('/table/' + sharableKey);
 };
 
@@ -32,9 +32,7 @@ export default function SetupTable({ actionData, loaderData }) {
   const [playersCount, setPlayersCount] = useState(1);
 
   return (
-    <div
-      className={`flex h-screen flex-col items-center justify-center bg-gray-50 dark:bg-gray-900`}
-    >
+    <div className="flex h-full flex-col items-center justify-center">
       <div className="container mx-auto max-w-2xl space-y-8 rounded-md p-4 shadow-md">
         <h1 className="text-4xl font-bold text-gray-800 dark:text-gray-100">
           Setup new game

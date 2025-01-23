@@ -26,18 +26,24 @@ export const links: Route.LinksFunction = () => [
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
+    <html lang="en" className="flex h-screen flex-col">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="flex-grow bg-gray-50 p-6 dark:bg-gray-900">
         {children}
         <ScrollRestoration />
         <Scripts />
       </body>
+      <footer className="py-6 text-center text-gray-600 dark:text-gray-400">
+        <p>© 2025 Table for Friends</p>
+        <a href="https://smallbytes.se/" rel="noreferrer" target="_blank">
+          Made by - Small Bytes
+        </a>
+      </footer>
     </html>
   );
 }
@@ -63,11 +69,11 @@ export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
   }
 
   return (
-    <main className="pt-16 p-4 container mx-auto">
+    <main className="container mx-auto p-4 pt-16">
       <h1>{message}</h1>
       <p>{details}</p>
       {stack && (
-        <pre className="w-full p-4 overflow-x-auto">
+        <pre className="w-full overflow-x-auto p-4">
           <code>{stack}</code>
         </pre>
       )}

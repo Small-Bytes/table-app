@@ -43,11 +43,18 @@ export default function Dashboard() {
           <Link to="/games" className="hover:underline">
             Games
           </Link>
-          <Form method="post" action="/logout">
-            <button type="submit" className="hover:underline">
-              Log Out
-            </button>
-          </Form>
+          <Form
+      method="post"
+      action="/logout"
+      onSubmit={(e) => {
+        e.preventDefault();
+        window.location.href = "/home"; // Redirect to /home after logout
+      }}
+    >
+      <button type="submit" className="hover:underline">
+        Log Out
+      </button>
+    </Form>
         </nav>
       </header>
 
